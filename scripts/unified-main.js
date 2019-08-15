@@ -7,10 +7,10 @@
   var mainContainer = document.getElementById("main-container");
 
   var pagesHtml = 
-  { userSignedOut : {
+  { 
+    userSignedOut : {
       title: "Web App",
-      navBarHTML :
-        `
+      navBarHTML : `
         <nav class="navbar navbar-expand-lg navbar-light bg-light navbar fixed-top">
         <a class="navbar-brand" href="/undex.html">Web app</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -24,81 +24,114 @@
       </div>
       </nav>
         `
-      , mainHTML :
-      `
+      , mainHTML : `
         <div id="firebaseui-auth-container"></div>
         <div hidden id="account-details"></div>
         </div>
       </div>
       `
-    },
-    userSignedIn: { 
-     navBarHTML :
-    `
-    <nav class="navbar navbar-expand-lg navbar-light bg-light navbar fixed-top">
-    <a class="navbar-brand" href="/index.html">Connect app</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav mr-auto">
-        <li class="nav-item active">
-          <a class="nav-link" href="/Home/Home.html">Home <span class="sr-only">(current)</span></a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/About/About.html">About</a>
-        </li>
-            <li class="nav-item">
-          <a class="nav-link" href="/Contact/ContactUs.html">Contact Us</a>
-        </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Dropdown
-          </a>
-          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <a class="dropdown-item" href="#">Action</a>
-            <a class="dropdown-item" href="#">Another action</a>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="#">Something else here</a>
+      } ,
+    userSignedIn : { 
+          navBarHTML :
+            `
+            <nav class="navbar navbar-expand-lg navbar-light bg-light navbar fixed-top">
+            <a class="navbar-brand" href="/index.html">Connect app</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+              <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                <button type="button" id="home-nav-btn" class="btn btn-light">Home</button>
+                </li>
+                <li class="nav-item">
+                <button type="button" id="about-nav-btn" class="btn btn-light">About</button>
+                </li>
+                    <li class="nav-item">
+                    <button type="button" id="contact-us-nav-btn" class="btn btn-light">Contact Us</button>
+                </li>
+            </ul>
+            <span class="navbar-text mr-sm-2" id="sign-in-status">Signed In</span>
+            <pre hidden id="account-details"></pre>
+            <button class="btn btn-outline-success my-2 my-sm-0" type="button" id="sign-out-btn">Sign Out</button>
           </div>
-        </li>
-      <li class="nav-item">
-          <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
-        </li>
-    </ul>
-    <span class="navbar-text mr-sm-2" id="sign-in-status">Signed In</span>
-    <pre hidden id="account-details"></pre>
-    <button class="btn btn-outline-success my-2 my-sm-0" type="button" id="sign-out-btn">Sign Out</button>
-  </div>
-  </nav>
-    `
-    , 
-    mainHTML :
-    `
-    <div hidden id="account-details"></div>
-    <div class="row">
-      <div class="col-lg-12">
-        <div class="content">
-          <h1>Connect</h1>
-          <h3>Your app for student life</h3>
-          <hr>
-          <button id="get-Started-btn class="btn btn-default btn-lg"> <i> <img src="/images/connecticon.png"> </i> Get Started!</button>
-        </div>
-      </div>
-    </div>
-  `
+          </nav>
+          `,
+        home : 
+        {
+        title : "home",
+          mainHTML :
+            `
+            <div hidden id="account-details"></div>
+            <div class="row">
+              <div class="col-lg-12">
+                <div class="content">
+                  <h1>Connect</h1>
+                  <h3>Your app for student life</h3>
+                  <button id="get-Started-btn class="btn btn-default btn-lg"> <i> <img src="/images/connecticon.png"> </i> Get Started!</button>
+                </div>
+              </div>
+            </div>
+          `, 
+          bgURL : '/images/Home-bg.jpg'
+        },
+        about: 
+        {
+         title : "About"
+         ,mainHTML :
+             `
+             <div hidden id="account-details"></div>
+             <div class="row">
+               <div class="col-lg-12">
+                 <div class="content">
+                   <h1>About Connect App</h1>                 
+                 </div>
+               </div>
+             </div>
+           `, bgURL: '/images/about-bg.jpeg'
+        },
+        'Contact Us': 
+        {
+         title : "Contact Us"
+         ,mainHTML :
+             `
+             <div hidden id="account-details"></div>
+             <div class="row">
+               <div class="col-lg-12">
+                 <div class="content">
+                   <h1>Contact Us</h1>                 
+                 </div>
+               </div>
+             </div>
+           `, bgURL: '/images/ContactUs-bg.jpg'
+        }
+
     }
   }
 
-    userSignedIn = function(){
-    document.title = pagesHtml.userSignedIn.title;
-    navbarContainer.innerHTML = pagesHtml.userSignedIn.navBarHTML;
-    mainContainer.innerHTML = pagesHtml.userSignedIn.mainHTML;
+  loadNavBar = function(page){
+    document.getElementById("navbar-container").innerHTML = pagesHtml[page].navBarHTML;
+  };
+
+  gotoSubPage = function (pageTitle){
+      document.getElementById("main-container").innerHTML = pagesHtml.userSignedIn[pageTitle].mainHTML;
+      document.getElementById("main-container").style.backgroundImage = "url("+pagesHtml.userSignedIn[pageTitle].bgURL+")";
+      document.getElementById("main-container").style.paddingTop =  "70x";
+      document.getElementById("main-container").style.backgroundSize =  "contain";
+      document.getElementById("main-container").style.backgroundPosition =  "center";
+      document.getElementById("main-container").style.backgroundRepeat =  "no-repeat";
+  };
+
+  userSignedIn = function(){
+    loadNavBar("userSignedIn")  
+    gotoSubPage("home");
     document.getElementById("sign-out-btn").addEventListener("click",logUserOut)
+    document.getElementById("home-nav-btn").addEventListener("click",function () {gotoSubPage("home")});
+    document.getElementById("about-nav-btn").addEventListener("click",function () {gotoSubPage("about")});
+    document.getElementById("contact-us-nav-btn").addEventListener("click",function () {gotoSubPage("Contact Us")});
   };
 
   userSignedOut = function(){
-    document.title = pagesHtml.userSignedOut.title;
     navbarContainer.innerHTML = pagesHtml.userSignedOut.navBarHTML;
     mainContainer.innerHTML = pagesHtml.userSignedOut.mainHTML;
     document.getElementById('account-details').textContent = 'null';
@@ -206,7 +239,6 @@
       console.log(error);
     });
   }
-
   initApp();
 
 });

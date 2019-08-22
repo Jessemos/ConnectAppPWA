@@ -1,7 +1,6 @@
 
-
 window.addEventListener("DOMContentLoaded", function () {
-  pagesHTML =
+  var pagesHTML =
     {
       userSignedOut: {
         // title: "Web App",
@@ -188,7 +187,7 @@ window.addEventListener("DOMContentLoaded", function () {
       'WelcomePage': {
         'main-container': {
           elementType: "HTML",
-          elementValue:` 
+          elementValue: ` 
           <!-- Modal -->
           <div class="modal fbd-example-modal-lg" id="welcome-modal" tabindex="-1" role="dialog"
               aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -332,17 +331,18 @@ window.addEventListener("DOMContentLoaded", function () {
                       `
         }
       }
-    }
+    };
 
   class appPage {
-    pagesHTML = null;
-    homePage = null;
+    //pagesHTML = null;
+    //homePage = null;
 
-    constructor (pagesHTML,homePage) {
+    constructor(pagesHTML, homePage) {
       this.pagesHTML = pagesHTML;
       this.homePage = homePage;
     }
-    loadPage = function (pageContent) {
+    generateElements () {
+      var pageContent = this.pagesHTML;
       for (const dict in pageContent) {
         if (pageContent[dict]["elementType"] === "HTML") {
           document.getElementById(dict).innerHTML = pageContent[dict]["elementValue"];
@@ -354,29 +354,19 @@ window.addEventListener("DOMContentLoaded", function () {
         }
       }
     }
-    loadPages = function(){
-      for (const dict in this.pagesHTML) {
-        if (pageContent[dict]["elementType"] === "HTML") {
-          document.getElementById(dict).innerHTML = pageContent[dict]["elementValue"];
-        }
-        if (pageContent[dict]["elementType"] === "CSS") {
-          console.log(dict);
-          console.log(pageContent[dict]["elementHTML"]);
-          document.querySelector("#" + pageContent[dict]["elementHTML"]).style.cssText += pageContent[dict]["elementValue"];
-        }
+
+    generate () {
+      this.generateElements(); 
+
     }
   }
 
   //All code here
-  userBaseForm = function (){
-    
-    
-  }
-
-  userSignedIn = function (userProfile) {
-    var userSignedInPage = new appPage();
-    userSignedInPage.loadPage(pagesHTML.userSignedIn);
-    userSignedInPage.loadPage(pagesHTML.Home);
+  userSignedIn = function () {
+    var userSignedInPage = new appPage(pagesHTML.userSignedIn, pagesHTML.Home);
+    //userSignedInPage.loadPage(pagesHTML.userSignedIn);
+    //userSignedInPage.loadPage(pagesHTML.Home);
+    userSignedInPage.generate();
     document.getElementById("sign-out-btn").addEventListener("click", logUserOut);
     document.getElementById("connect-nav-btn").addEventListener("click", function () {
       userSignedIn();
@@ -394,7 +384,7 @@ window.addEventListener("DOMContentLoaded", function () {
       userSignedInPage.loadPage(pagesHTML['WelcomePage']);
       $('#welcome-modal').modal();
       userBaseForm(userProfile);
-      
+
     });
 
   };
@@ -422,7 +412,7 @@ window.addEventListener("DOMContentLoaded", function () {
       // An error happened.
       console.log("Sign out ***NOT*** Successfull!");
     });
-  }
+  };
 
   var uiConfig = {
     callbacks: {
@@ -478,13 +468,13 @@ window.addEventListener("DOMContentLoaded", function () {
       if (user) {
         // User is signed in.
         var user = {
-        "displayName" : user.displayName,
-        "email" : user.email,
-        "emailVerified" : user.emailVerified,
-        "photoURL" : user.photoURL,
-        "uid" : user.uid,
-        "phoneNumber" : user.phoneNumber,
-        "providerData" : user.providerData,
+          "displayName": user.displayName,
+          "email": user.email,
+          "emailVerified": user.emailVerified,
+          "photoURL": user.photoURL,
+          "uid": user.uid,
+          "phoneNumber": user.phoneNumber,
+          "providerData": user.providerData,
         }
         userSignedIn(user);
         user.getIdToken().then(function (accessToken) {
@@ -499,7 +489,7 @@ window.addEventListener("DOMContentLoaded", function () {
             accessToken: accessToken,
             providerData: providerData
           }, null, '  ');*/
-      });
+        });
       } else {
         // User is signed out.
         userSignedOut();
@@ -509,7 +499,8 @@ window.addEventListener("DOMContentLoaded", function () {
     }, function (error) {
       console.log(error);
     });
-  }
+  };
+
   initApp();
 
 });

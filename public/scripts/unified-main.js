@@ -1,12 +1,11 @@
 
 window.addEventListener("DOMContentLoaded", function () {
-  var pagesHTML =
-    {
-      userSignedOut: {
-        // title: "Web App",
-        'navbar-container': {
-          elementType: "HTML",
-          elementValue: `
+  var pagesHTML = {
+    'userSignedOut': {
+      // title: "Web App",
+      'navbar-container': {
+        elementType: "HTML",
+        elementValue: `
         <nav class="navbar navbar-expand-lg navbar-light bg-light navbar fixed-top">
         <a class="navbar-brand" href="/index.html">Web app</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -20,35 +19,33 @@ window.addEventListener("DOMContentLoaded", function () {
       </div>
       </nav>
         `
-        },
-        'main-container': {
-          elementType: "HTML",
-          elementValue: `
+      },
+      'main-container': {
+        elementType: "HTML",
+        elementValue: `
         <div id="firebaseui-auth-container"></div>
         <div hidden id="account-details"></div>
         </div>
       </div>
       `},
-        'account-details': {
-          elementType: "HTML",
-          elementValue: `
+      'account-details': {
+        elementType: "HTML",
+        elementValue: `
         textContent = 'null'
         `
-        },
-        'CSS': {
-          elementType: "CSS",
-          elementHTML: "main-container",
-          elementValue: `
+      },
+      'CSS': {
+        elementType: "CSS",
+        elementHTML: "main-container",
+        elementValue: `
                 padding-top : 200px;
                 background: none;
               `
-        }
-      },
-
-      userSignedIn: {
-        'navbar-container': {
-          elementType: "HTML",
-          elementValue: `
+      }
+    },
+    'userSignedIn': {
+      'navbar-container': {
+        "HTML": `
             <nav class="navbar navbar-expand-lg navbar-light bg-light navbar fixed-top">
             <button class="navbar-brand btn btn-light" id="connect-nav-btn"->Connect app</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -68,39 +65,44 @@ window.addEventListener("DOMContentLoaded", function () {
             </ul>
             <span class="navbar-text mr-sm-2" id="sign-in-status">Signed In</span>
             <pre hidden id="account-details"></pre>
-            <button class="btn btn-outline-success my-2 my-sm-0" type="button" id="sign-out-btn">Sign Out</button>
+            <button class="btn btn-outline-success my-2 my-sm-0" type="button" id="sign-out-btn" >Sign Out</button>
           </div>
           </nav>
-          `
-        },
-        'sign-out-btn': {
-          elementType: "button",
-          elementEventType: "click",
-          elementEventFunction: 'logUserOut',
-          elementEventFunctionParams: ''
-        },
-        'home-nav-btn': {
-          elementType: "button",
-          elementEventType: "click",
-          elementEventFunction: 'loadPage',
-          elementEventFunctionParams: 'Home'
-        },
-        'about-nav-btn': {
-          elementType: "button",
-          elementEventFunction: 'loadPage',
-          elementEventFunctionParams: 'About'
-        },
-        'contact-us-nav-btn': {
-          elementType: "button",
-          elementEventType: "click",
-          elementEventFunction: 'loadPage',
-          elementEventFunctionParams: 'Contact Us'
+          `,
+        'buttons': {
+          'sign-out-btn': {
+            elementType: "button",
+            elementEventType: "click",
+            elementEventFunction: 'logUserOut',
+            elementEventFunctionParams: ''
+          },
+          'home-nav-btn': {
+            elementType: "button",
+            elementEventType: "click",
+            elementEventFunction: 'loadPage',
+            elementEventFunctionParams: 'Home'
+          },
+          'about-nav-btn': {
+            elementType: "button",
+            elementEventFunction: 'loadPage',
+            elementEventFunctionParams: 'About'
+          },
+          'contact-us-nav-btn': {
+            elementType: "button",
+            elementEventType: "click",
+            elementEventFunction: 'loadPage',
+            elementEventFunctionParams: 'Contact Us'
+          },
+          'connect-nav-btn': {
+            elementType: "button",
+            elementEventFunction: 'loadPage',
+            elementEventFunctionParams: 'Home'
+          }
         }
       },
-      Home: {
+      'Home': {
         'main-container': {
-          elementType: "HTML",
-          elementValue: `
+          'HTML': `
             <div hidden id="account-details"></div>
             <div class="row">
               <div class="col-lg-12">
@@ -111,33 +113,27 @@ window.addEventListener("DOMContentLoaded", function () {
                 <button id="get-started-btn" class="btn btn-default btn-lg"> <i> <img src="/images/connecticon.png"> </i> Get Started!</button>
                 </div>
               </div>
-            </div>
-          `
-        },
-        'CSS': {
-          elementType: "CSS",
-          elementHTML: "main-container",
-          elementValue: `
+            </div>`,
+          'CSS': `
           padding-top : 70px;
           background-image: url('/images/Home-bg.jpg');
           background-size: contain;
           background-position: center;
           background-repeat: no-repeat;
-          `
-        },
-        'get-started-btn': {
-          elementType: "button",
-          elementEventType: "click",
-          elementEventFunction: 'loadPage',
-          elementEventFunctionParams: 'Welcome Page'
+          `,
+          'buttons': {
+            'get-started-btn': {
+              elementType: "button",
+              elementEventType: "click",
+              elementEventFunction: "loadPage",
+              elementEventFunctionParams: 'Welcome Page'
+            }
+          }
         }
       },
-      About:
-      {
+      'About': {
         "main-container": {
-          elementType: "HTML",
-          elementHTML: "main-container",
-          elementValue: `
+          "HTML": `
              <div hidden id="account-details"></div>
              <div class="row">
                <div class="col-lg-12">
@@ -146,11 +142,8 @@ window.addEventListener("DOMContentLoaded", function () {
                  </div>
                </div>
              </div>
-           `},
-        'CSS': {
-          elementType: "CSS",
-          elementHTML: "main-container",
-          elementValue: `
+           `,
+          'CSS': `
                 padding-top : 70px;
                 background-image: url('/images/about-bg.jpeg');
                 background-size: contain;
@@ -161,8 +154,7 @@ window.addEventListener("DOMContentLoaded", function () {
       },
       'Contact Us': {
         "main-container": {
-          elementType: "HTML",
-          elementValue: `
+          "HTML": `
             <div hidden id="account-details"></div>
              <div class="row">
                <div class="col-lg-12">
@@ -171,11 +163,8 @@ window.addEventListener("DOMContentLoaded", function () {
                  </div>
                </div>
              </div>
-           `},
-        'CSS': {
-          elementType: "CSS",
-          elementHTML: "main-container",
-          elementValue: `
+           `,
+          'CSS': `
             padding-top : 70px;
             background-image: url('/images/ContactUs-bg.jpg');
             background-size: contain;
@@ -185,9 +174,42 @@ window.addEventListener("DOMContentLoaded", function () {
         }
       },
       'WelcomePage': {
+        'navbar-container': {
+          "HTML": `
+              <nav class="navbar navbar-expand-lg navbar-light bg-light navbar fixed-top">
+              <button class="navbar-brand btn btn-light" id="connect-nav-btn"->Connect app</a>
+              <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+              <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                  <li class="nav-item active">
+                  <button type="button" id="home-nav-btn" class="btn btn-light">Home</button>
+                  </li>
+              </ul>
+              <span class="navbar-text mr-sm-2" id="sign-in-status">Signed In</span>
+              <pre hidden id="account-details"></pre>
+              <button class="btn btn-outline-success my-2 my-sm-0" type="button" id="sign-out-btn" >Sign Out</button>
+            </div>
+            </nav>
+            `,
+          'buttons': {
+            'sign-out-btn': {
+              elementType: "button",
+              elementEventType: "click",
+              elementEventFunction: 'logUserOut',
+              elementEventFunctionParams: ''
+            },
+            'home-nav-btn': {
+              elementType: "button",
+              elementEventType: "click",
+              elementEventFunction: 'loadPage',
+              elementEventFunctionParams: 'Home'
+            }
+          }
+        },
         'main-container': {
-          elementType: "HTML",
-          elementValue: ` 
+          "HTML": ` 
           <!-- Modal -->
           <div class="modal fbd-example-modal-lg" id="welcome-modal" tabindex="-1" role="dialog"
               aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -319,74 +341,52 @@ window.addEventListener("DOMContentLoaded", function () {
               </form>
           </div>
           <!-- Base Form Ends-->
-      </div>
-  `
-        },
-        'CSS': {
-          elementType: "CSS",
-          elementHTML: "main-container",
-          elementValue: `
-                      padding-top : 70px;
-                      background-image: none;
-                      `
+      </div>`
+          ,
+          'CSS': `padding-top : 70px;
+                  background-image: none;
+                `
         }
       }
-    };
+    }
+  }
 
   class appPage {
-    //pagesHTML = null;
-    //homePage = null;
+    pageHTML = null;
+    homePage = null;
 
-    constructor(pagesHTML, homePage) {
-      this.pagesHTML = pagesHTML;
+    constructor(pageHTML, homePage) {
+      this.pageHTML = pageHTML;
       this.homePage = homePage;
+      this.generate();
     }
-    generateElements () {
-      var pageContent = this.pagesHTML;
-      for (const dict in pageContent) {
-        if (pageContent[dict]["elementType"] === "HTML") {
-          document.getElementById(dict).innerHTML = pageContent[dict]["elementValue"];
-        }
-        if (pageContent[dict]["elementType"] === "CSS") {
-          console.log(dict);
-          console.log(pageContent[dict]["elementHTML"]);
-          document.querySelector("#" + pageContent[dict]["elementHTML"]).style.cssText += pageContent[dict]["elementValue"];
-        }
+    generateElements(pageElements, elementID) {
+      var pageContent = pageElements;
+      document.getElementById(elementID).innerHTML = pageContent[elementID]["HTML"];
+      if ("CSS" in pageContent[elementID]) {
+        document.querySelector("#" + elementID).style.cssText += pageContent[elementID]["CSS"];
+      }
+      for (const elementButtons in pageContent[elementID]["buttons"]) {
+        document.getElementById(elementButtons).addEventListener(pageContent[elementID]["buttons"][elementButtons]["elementEventType"], function () {
+          alert(`Button ${elementButtons} Clicked!`);
+          if (pageContent[elementID]["buttons"][elementButtons] === "loadPage") {
+            var 
+          }
+        });
       }
     }
 
-    generate () {
-      this.generateElements(); 
-
+    generate() {
+      this.generateElements(this.pageHTML, "navbar-container");
+      this.generateElements(this.pageHTML[this.homePage], "main-container");
     }
   }
 
   //All code here
   userSignedIn = function () {
-    var userSignedInPage = new appPage(pagesHTML.userSignedIn, pagesHTML.Home);
+    var userSignedInPage = new appPage(pagesHTML.userSignedIn, "Home");
     //userSignedInPage.loadPage(pagesHTML.userSignedIn);
     //userSignedInPage.loadPage(pagesHTML.Home);
-    userSignedInPage.generate();
-    document.getElementById("sign-out-btn").addEventListener("click", logUserOut);
-    document.getElementById("connect-nav-btn").addEventListener("click", function () {
-      userSignedIn();
-    });
-    document.getElementById("home-nav-btn").addEventListener("click", function () {
-      userSignedIn();
-    });
-    document.getElementById("about-nav-btn").addEventListener("click", function () {
-      userSignedInPage.loadPage(pagesHTML.About);
-    });
-    document.getElementById("contact-us-nav-btn").addEventListener("click", function () {
-      userSignedInPage.loadPage(pagesHTML['Contact Us']);
-    });
-    document.getElementById("get-started-btn").addEventListener("click", function () {
-      userSignedInPage.loadPage(pagesHTML['WelcomePage']);
-      $('#welcome-modal').modal();
-      userBaseForm(userProfile);
-
-    });
-
   };
 
   userSignedOut = function () {
@@ -467,19 +467,16 @@ window.addEventListener("DOMContentLoaded", function () {
     firebase.auth().onAuthStateChanged(function (user) {
       if (user) {
         // User is signed in.
-        var user = {
-          "displayName": user.displayName,
-          "email": user.email,
-          "emailVerified": user.emailVerified,
-          "photoURL": user.photoURL,
-          "uid": user.uid,
-          "phoneNumber": user.phoneNumber,
-          "providerData": user.providerData,
-        }
-        userSignedIn(user);
-        user.getIdToken().then(function (accessToken) {
-          document.getElementById('account-details').textContent = user;
-          /*JSON.stringify({
+        userSignedIn();
+        var displayName = user.displayName;
+        var email = user.email;
+        var emailVerified = user.emailVerified;
+        var photoURL = user.photoURL;
+        var uid = user.uid;
+        var phoneNumber = user.phoneNumber;
+        var providerData = user.providerData;
+        /*user.getIdToken().then(function (accessToken) {
+          document.getElementById('account-details').textContent = JSON.stringify({
             displayName: displayName,
             email: email,
             emailVerified: emailVerified,
@@ -488,8 +485,8 @@ window.addEventListener("DOMContentLoaded", function () {
             uid: uid,
             accessToken: accessToken,
             providerData: providerData
-          }, null, '  ');*/
-        });
+          }, null, '  ');
+        });*/
       } else {
         // User is signed out.
         userSignedOut();

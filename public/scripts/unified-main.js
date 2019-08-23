@@ -63,32 +63,32 @@ window.addEventListener("DOMContentLoaded", function () {
         'buttons': {
           'sign-out-btn': {
             buttontEventType: "click",
-            buttonEventFunction: logUserOut = function () {
+            buttonEventFunction: function () {
               logUserOut();
             }
           },
           'home-nav-btn': {
             buttontEventType: "click",
-            buttonEventFunction: logUserOut = function () {
+            buttonEventFunction: function () {
               appPage.generateElements(pagesHTML.userSignedIn.Home, "main-container");
             }
           },
           'about-nav-btn': {
             buttontEventType: "click",
-            buttonEventFunction: logUserOut = function () {
+            buttonEventFunction: function () {
               appPage.generateElements(pagesHTML.userSignedIn.About, "main-container");
             }
           },
 
           'contact-us-nav-btn': {
             buttontEventType: "click",
-            buttonEventFunction: logUserOut = function () {
+            buttonEventFunction: function () {
               appPage.generateElements(pagesHTML.userSignedIn["Contact Us"], "main-container");
             }
           },
           'connect-nav-btn': {
             buttontEventType: "click",
-            buttonEventFunction: logUserOut = function () {
+            buttonEventFunction: function () {
               appPage.generateElements(pagesHTML.userSignedIn.Home, "main-container");
             }
           }
@@ -119,7 +119,9 @@ window.addEventListener("DOMContentLoaded", function () {
             'get-started-btn': {
               buttontEventType: "click",
               buttonEventFunction: welcomePage = function () {
+                appPage.generateElements(pagesHTML.userSignedIn.WelcomePage, "navbar-container");
                 appPage.generateElements(pagesHTML.userSignedIn.WelcomePage, "main-container");
+                $('#welcome-modal').modal();
               }
             }
           }
@@ -197,7 +199,10 @@ window.addEventListener("DOMContentLoaded", function () {
             'home-nav-btn': {
               buttontEventType: "click",
               buttonEventFunction: function () {
-                appPage.generateElements(pagesHTML.userSignedIn.Home, "main-container");
+                appPage.changeCSSFile('/styles/app.css', 4);
+                appPage.generateElements(pagesHTML.userSignedIn,"navbar-container");
+                appPage.generateElements(pagesHTML.userSignedIn.Home,"main-container");
+
               }
             }
           }
@@ -205,7 +210,7 @@ window.addEventListener("DOMContentLoaded", function () {
         'main-container': {
           "HTML": ` 
           <!-- Modal -->
-          <div class="modal fbd-example-modal-lg" id="welcome-modal" tabindex="-1" role="dialog"
+          <div class="modal fade fbd-example-modal-lg" id="welcome-modal" tabindex="-1" role="dialog"
               aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
               <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
                   <div class="modal-content">
@@ -352,9 +357,52 @@ window.addEventListener("DOMContentLoaded", function () {
               buttontEventType: "click",
               buttonEventFunction: function () {
                 alert("continue-base-form-clicked");
+                appPage.generateElements(pagesHTML.userSignedIn.CampusMap, "main-container");
+                appPage.changeCSSFile('/styles/university_Campus.css', 4);
               }
             }
           }
+        }
+      },
+      FullProfile: {
+        HTML: ``,
+        CSS: ``,
+        buttons: {
+          btn: ''
+        }
+      },
+      CampusMap: {
+        'main-container': {
+          HTML: `
+          <h1>
+          University Campus Map <br>
+        </h1>
+      
+        <div class="container" id="map-container">
+          
+        </div>
+      
+        <div class="container" id="container">
+          <div class="square"></div>
+          <div class="square"></div>
+          <div class="square"></div>
+          <div class="square"></div>
+          <div class="square"></div>
+          <div class="square"></div>
+        </div>`,
+          CSS: `
+          `
+          //,
+          //buttons: {
+          //  btn: ''
+          //}
+        }
+      },
+      LocationZoom: {
+        HTML: ``,
+        CSS: ``,
+        buttons: {
+          btn: ''
         }
       }
     }
@@ -369,14 +417,26 @@ window.addEventListener("DOMContentLoaded", function () {
       this.homePage = homePage;
       this.generate();
     }
+    static changeCSSFile(cssFile, cssLinkIndex) {
+      var oldlink = document.getElementsByTagName("link").item(cssLinkIndex);
+
+      var newlink = document.createElement("link");
+      newlink.setAttribute("rel", "stylesheet");
+      newlink.setAttribute("type", "text/css");
+      newlink.setAttribute("href", cssFile);
+      document.getElementsByTagName("head").item(0).replaceChild(newlink, oldlink);
+    }
+
     static generateElements(pageElements, elementID) {
       var pageContent = pageElements;
       document.getElementById(elementID).innerHTML = pageContent[elementID]["HTML"];
       if ("CSS" in pageContent[elementID]) {
         document.querySelector("#" + elementID).style.cssText += pageContent[elementID]["CSS"];
       }
-      for (const elementButtons in pageContent[elementID]["buttons"]) {
-        document.getElementById(elementButtons).addEventListener(pageContent[elementID]["buttons"][elementButtons]["buttontEventType"], pageContent[elementID]["buttons"][elementButtons]["buttonEventFunction"]);
+      if ("buttons" in pageContent[elementID]) {
+        for (const elementButtons in pageContent[elementID]["buttons"]) {
+          document.getElementById(elementButtons).addEventListener(pageContent[elementID]["buttons"][elementButtons]["buttontEventType"], pageContent[elementID]["buttons"][elementButtons]["buttonEventFunction"]);
+        }
       }
     }
     generate() {

@@ -1,11 +1,9 @@
 
 window.addEventListener("DOMContentLoaded", function () {
-  pagesHTML = {
+  var pagesHTML = {
     'userSignedOut': {
-      // title: "Web App",
       'navbar-container': {
-        elementType: "HTML",
-        elementValue: `
+        "HTML": `
         <nav class="navbar navbar-expand-lg navbar-light bg-light navbar fixed-top">
         <a class="navbar-brand" href="/index.html">Web app</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -20,27 +18,20 @@ window.addEventListener("DOMContentLoaded", function () {
       </nav>
         `
       },
-      'main-container': {
-        elementType: "HTML",
-        elementValue: `
+      Home: {
+        'main-container': {
+          "HTML": `
+        <div id="account-details"></div>
         <div id="firebaseui-auth-container"></div>
         <div hidden id="account-details"></div>
         </div>
       </div>
-      `},
-      'account-details': {
-        elementType: "HTML",
-        elementValue: `
-        textContent = 'null'
-        `
-      },
-      'CSS': {
-        elementType: "CSS",
-        elementHTML: "main-container",
-        elementValue: `
+      `,
+          'CSS': `
                 padding-top : 200px;
                 background: none;
               `
+        }
       }
     },
     'userSignedIn': {
@@ -71,32 +62,35 @@ window.addEventListener("DOMContentLoaded", function () {
           `,
         'buttons': {
           'sign-out-btn': {
-              buttontEventType: "click",
-              buttonEventFunction: logUserOut = function(){
-                  logUserOut();
-              }
+            buttontEventType: "click",
+            buttonEventFunction: logUserOut = function () {
+              logUserOut();
+            }
           },
           'home-nav-btn': {
-            elementType: "button",
-            elementEventType: "click",
-            elementEventFunction: 'loadPage',
-            elementEventFunctionParams: 'Home'
+            buttontEventType: "click",
+            buttonEventFunction: logUserOut = function () {
+              appPage.generateElements(pagesHTML.userSignedIn.Home, "main-container");
+            }
           },
           'about-nav-btn': {
-            elementType: "button",
-            elementEventFunction: 'loadPage',
-            elementEventFunctionParams: 'About'
+            buttontEventType: "click",
+            buttonEventFunction: logUserOut = function () {
+              appPage.generateElements(pagesHTML.userSignedIn.About, "main-container");
+            }
           },
+
           'contact-us-nav-btn': {
-            elementType: "button",
-            elementEventType: "click",
-            elementEventFunction: 'loadPage',
-            elementEventFunctionParams: 'Contact Us'
+            buttontEventType: "click",
+            buttonEventFunction: logUserOut = function () {
+              appPage.generateElements(pagesHTML.userSignedIn["Contact Us"], "main-container");
+            }
           },
           'connect-nav-btn': {
-            elementType: "button",
-            elementEventFunction: 'loadPage',
-            elementEventFunctionParams: 'Home'
+            buttontEventType: "click",
+            buttonEventFunction: logUserOut = function () {
+              appPage.generateElements(pagesHTML.userSignedIn.Home, "main-container");
+            }
           }
         }
       },
@@ -123,10 +117,10 @@ window.addEventListener("DOMContentLoaded", function () {
           `,
           'buttons': {
             'get-started-btn': {
-              elementType: "button",
-              elementEventType: "click",
-              elementEventFunction: "loadPage",
-              elementEventFunctionParams: 'Welcome Page'
+              buttontEventType: "click",
+              buttonEventFunction: welcomePage = function () {
+                appPage.generateElements(pagesHTML.userSignedIn.WelcomePage, "main-container");
+              }
             }
           }
         }
@@ -196,15 +190,15 @@ window.addEventListener("DOMContentLoaded", function () {
           'buttons': {
             'sign-out-btn': {
               buttontEventType: "click",
-              buttonEventFunction: logUserOut = function(){
-                  logUserOut();
+              buttonEventFunction: logUserOut = function () {
+                logUserOut();
               }
             },
             'home-nav-btn': {
-              elementType: "button",
-              elementEventType: "click",
-              elementEventFunction: 'loadPage',
-              elementEventFunctionParams: 'Home'
+              buttontEventType: "click",
+              buttonEventFunction: function () {
+                appPage.generateElements(pagesHTML.userSignedIn.Home, "main-container");
+              }
             }
           }
         },
@@ -332,10 +326,10 @@ window.addEventListener("DOMContentLoaded", function () {
                   </div>
                   <div class="form-row align-items-center">
                       <div class="col-auto mr-auto">
-                          <button type="submit" id="baseFromEdit" class="btn btn-primary">edit</button>
+                          <button type="button" id="edit-base-form-btn" class="btn btn-primary">edit</button>
                       </div>
                       <div class="col-auto">
-                          <button type="submit" id="baseFormContinue" class="btn btn-primary justify-content-end">continue</button>
+                          <button type="button" id="continue-base-form-btn" class="btn btn-primary justify-content-end">continue</button>
                       </div>
                   </div>
               </form>
@@ -343,9 +337,24 @@ window.addEventListener("DOMContentLoaded", function () {
           <!-- Base Form Ends-->
       </div>`
           ,
-          'CSS': `padding-top : 70px;
-                  background-image: none;
-                `
+          'CSS':
+            `padding-top : 70px;
+            background-image: none;
+           `
+          , 'buttons': {
+            'edit-base-form-btn': {
+              buttontEventType: "click",
+              buttonEventFunction: function () {
+                alert("edit-base-form-clicked");
+              }
+            },
+            'continue-base-form-btn': {
+              buttontEventType: "click",
+              buttonEventFunction: function () {
+                alert("continue-base-form-clicked");
+              }
+            }
+          }
         }
       }
     }
@@ -355,29 +364,26 @@ window.addEventListener("DOMContentLoaded", function () {
     pageHTML = null;
     homePage = null;
 
-    constructor(pageHTML, homePage) {
-      this.pageHTML = pageHTML;
+    constructor(pagesHTML, homePage) {
+      this.pageHTML = pagesHTML;
       this.homePage = homePage;
       this.generate();
     }
-    generateElements(pageElements, elementID) {
+    static generateElements(pageElements, elementID) {
       var pageContent = pageElements;
       document.getElementById(elementID).innerHTML = pageContent[elementID]["HTML"];
       if ("CSS" in pageContent[elementID]) {
         document.querySelector("#" + elementID).style.cssText += pageContent[elementID]["CSS"];
       }
       for (const elementButtons in pageContent[elementID]["buttons"]) {
-        document.getElementById(elementButtons).addEventListener(pageContent[elementID]["buttons"][elementButtons]["elementEventType"], function () {
-          alert(`Button ${elementButtons} Clicked!`);
-
-        });
+        document.getElementById(elementButtons).addEventListener(pageContent[elementID]["buttons"][elementButtons]["buttontEventType"], pageContent[elementID]["buttons"][elementButtons]["buttonEventFunction"]);
       }
     }
-  generate() {
-    this.generateElements(this.pageHTML, "navbar-container");
-    this.generateElements(this.pageHTML[this.homePage], "main-container");
+    generate() {
+      appPage.generateElements(this.pageHTML, "navbar-container");
+      appPage.generateElements(this.pageHTML[this.homePage], "main-container");
+    }
   }
-}
 
   //All code here
   userSignedIn = function () {
@@ -386,116 +392,115 @@ window.addEventListener("DOMContentLoaded", function () {
     //userSignedInPage.loadPage(pagesHTML.Home);
   };
 
-userSignedOut = function () {
-  var userSignedOutPage = new appPage();
-  userSignedOutPage.loadPage(pagesHTML.userSignedOut);
-  // document.getElementById('account-details').textContent = 'null';
+  userSignedOut = function () {
+    var userSignedOutPage = new appPage(pagesHTML.userSignedOut, "Home");
+    // document.getElementById('account-details').textContent = 'null';
 
-  // Initialize the FirebaseUI Widget using Firebase.
-  var ui = new firebaseui.auth.AuthUI(firebase.auth());
-  // The start method will wait until the DOM is loaded.
+    // Initialize the FirebaseUI Widget using Firebase.
+    var ui = new firebaseui.auth.AuthUI(firebase.auth());
+    // The start method will wait until the DOM is loaded.
 
-  ui.start('#firebaseui-auth-container', uiConfig);
-};
+    ui.start('#firebaseui-auth-container', uiConfig);
+  };
 
-logUserOut = function () {
-  // console.log("Clicked Sign Out!");
-  firebase.auth().signOut().then(function () {
-    // Sign-out successful.
-    console.log("Sign out Successfull!");
-    alert('Redirectin to Home Screen');
-    // window.location='/index.html';
-  }, function (error) {
-    // An error happened.
-    console.log("Sign out ***NOT*** Successfull!");
-  });
-};
+  logUserOut = function () {
+    // console.log("Clicked Sign Out!");
+    firebase.auth().signOut().then(function () {
+      // Sign-out successful.
+      console.log("Sign out Successfull!");
+      alert('Redirectin to Home Screen');
+      // window.location='/index.html';
+    }, function (error) {
+      // An error happened.
+      console.log("Sign out ***NOT*** Successfull!");
+    });
+  };
 
-var uiConfig = {
-  callbacks: {
-    signInSuccessWithAuthResult: function (authResult, redirectUrl) {
-      var user = authResult.user;
-      var credential = authResult.credential;
-      var isNewUser = authResult.additionalUserInfo.isNewUser;
-      var providerId = authResult.additionalUserInfo.providerId;
-      var operationType = authResult.operationType;
-      // Do something with the returned AuthResult.
-      // Return type determines whether we continue the redirect automatically
-      // or whether we leave that to developer to handle.
-      return true;
+  var uiConfig = {
+    callbacks: {
+      signInSuccessWithAuthResult: function (authResult, redirectUrl) {
+        var user = authResult.user;
+        var credential = authResult.credential;
+        var isNewUser = authResult.additionalUserInfo.isNewUser;
+        var providerId = authResult.additionalUserInfo.providerId;
+        var operationType = authResult.operationType;
+        // Do something with the returned AuthResult.
+        // Return type determines whether we continue the redirect automatically
+        // or whether we leave that to developer to handle.
+        return true;
+      },
+      signInFailure: function (error) {
+        // Some unrecoverable error occurred during sign-in.
+        // Return a promise when error handling is completed and FirebaseUI
+        // will reset, clearing any UI. This commonly occurs for error code
+        // 'firebaseui/anonymous-upgrade-merge-conflict' when merge conflict
+        // occurs. Check below for more details on this.
+        return handleUIError(error);
+      },
+      uiShown: function () {
+        // The widget is rendered.
+        // Hide the loader.
+        // document.getElementById('loader').style.display = 'none';
+      }
     },
-    signInFailure: function (error) {
-      // Some unrecoverable error occurred during sign-in.
-      // Return a promise when error handling is completed and FirebaseUI
-      // will reset, clearing any UI. This commonly occurs for error code
-      // 'firebaseui/anonymous-upgrade-merge-conflict' when merge conflict
-      // occurs. Check below for more details on this.
-      return handleUIError(error);
-    },
-    uiShown: function () {
-      // The widget is rendered.
-      // Hide the loader.
-      document.getElementById('loader').style.display = 'none';
+    signInFlow: 'popup',
+    signInSuccessUrl: '/index.html',
+    signInOptions: [
+      // Leave the lines as is for the providers you want to offer your users.
+      firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+      firebase.auth.FacebookAuthProvider.PROVIDER_ID,
+      firebase.auth.TwitterAuthProvider.PROVIDER_ID,
+      firebase.auth.GithubAuthProvider.PROVIDER_ID,
+      firebase.auth.EmailAuthProvider.PROVIDER_ID,
+      firebase.auth.PhoneAuthProvider.PROVIDER_ID,
+      firebaseui.auth.AnonymousAuthProvider.PROVIDER_ID
+    ],
+    // tosUrl and privacyPolicyUrl accept either url string or a callback
+    // function.
+    // Terms of service url/callback.
+    tosUrl: 'www.google.co.il',
+    // Privacy policy url/callback.
+    privacyPolicyUrl: function () {
+      window.location.assign('www.google.co.il');
     }
-  },
-  signInFlow: 'popup',
-  signInSuccessUrl: '/index.html',
-  signInOptions: [
-    // Leave the lines as is for the providers you want to offer your users.
-    firebase.auth.GoogleAuthProvider.PROVIDER_ID,
-    firebase.auth.FacebookAuthProvider.PROVIDER_ID,
-    firebase.auth.TwitterAuthProvider.PROVIDER_ID,
-    firebase.auth.GithubAuthProvider.PROVIDER_ID,
-    firebase.auth.EmailAuthProvider.PROVIDER_ID,
-    firebase.auth.PhoneAuthProvider.PROVIDER_ID,
-    firebaseui.auth.AnonymousAuthProvider.PROVIDER_ID
-  ],
-  // tosUrl and privacyPolicyUrl accept either url string or a callback
-  // function.
-  // Terms of service url/callback.
-  tosUrl: 'www.google.co.il',
-  // Privacy policy url/callback.
-  privacyPolicyUrl: function () {
-    window.location.assign('www.google.co.il');
-  }
-};
+  };
 
-initApp = function () {
-  firebase.auth().onAuthStateChanged(function (user) {
-    if (user) {
-      // User is signed in.
-      userSignedIn();
-      var displayName = user.displayName;
-      var email = user.email;
-      var emailVerified = user.emailVerified;
-      var photoURL = user.photoURL;
-      var uid = user.uid;
-      var phoneNumber = user.phoneNumber;
-      var providerData = user.providerData;
-      /*user.getIdToken().then(function (accessToken) {
-        document.getElementById('account-details').textContent = JSON.stringify({
-          displayName: displayName,
-          email: email,
-          emailVerified: emailVerified,
-          phoneNumber: phoneNumber,
-          photoURL: photoURL,
-          uid: uid,
-          accessToken: accessToken,
-          providerData: providerData
-        }, null, '  ');
-      });*/
-    } else {
-      // User is signed out.
-      userSignedOut();
-      ui.start('#firebaseui-auth-container', uiConfig);
+  initApp = function () {
+    firebase.auth().onAuthStateChanged(function (user) {
+      if (user) {
+        // User is signed in.
+        userSignedIn();
+        var displayName = user.displayName;
+        var email = user.email;
+        var emailVerified = user.emailVerified;
+        var photoURL = user.photoURL;
+        var uid = user.uid;
+        var phoneNumber = user.phoneNumber;
+        var providerData = user.providerData;
+        /*user.getIdToken().then(function (accessToken) {
+          document.getElementById('account-details').textContent = JSON.stringify({
+            displayName: displayName,
+            email: email,
+            emailVerified: emailVerified,
+            phoneNumber: phoneNumber,
+            photoURL: photoURL,
+            uid: uid,
+            accessToken: accessToken,
+            providerData: providerData
+          }, null, '  ');
+        });*/
+      } else {
+        // User is signed out.
+        userSignedOut();
+        ui.start('#firebaseui-auth-container', uiConfig);
 
-    }
-  }, function (error) {
-    console.log(error);
-  });
-};
+      }
+    }, function (error) {
+      console.log(error);
+    });
+  };
 
-initApp();
+  initApp();
 
 });
 
